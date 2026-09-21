@@ -1,0 +1,26 @@
+{
+  "event_id": "example-lot-move-1",
+  "event_type": "lot_move",
+  "timestamp": "2026-09-21T16:40:00Z",
+  "tool_id": "PKG-01",
+  "lot_id": "L260921-001",
+  "ceid": 3002,
+  "payload": {
+    "action": "track_out",
+    "step": "FINAL_TEST",
+    "recipe_id": "XB-C-2G4",
+    "wafers_in": 24,
+    "wafers_out": 24,
+    "scrap_wafers": 0,
+    "good_die": 54000,
+    "tested_die": 60000,
+    "measurements": [
+      {
+        "metric": "insertion_loss_db",
+        "value": 1.12,
+        "unit": "dB",
+        "wafer_slot": 7
+      }
+    ]
+  }
+}

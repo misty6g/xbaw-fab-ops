@@ -1,0 +1,14 @@
+{
+  "event_id": "example-tool-state-1",
+  "event_type": "tool_state",
+  "timestamp": "2026-09-21T15:04:00Z",
+  "tool_id": "DEP-01",
+  "lot_id": "L260921-001",
+  "ceid": 1001,
+  "payload": {
+    "from_state": "IDLE",
+    "to_state": "EXECUTING",
+    "recipe_id": "XB-N77",
+    "operator": "OP-14"
+  }
+}

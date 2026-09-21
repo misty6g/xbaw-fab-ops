@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fab
+      POSTGRES_PASSWORD: fab
+      POSTGRES_DB: xbaw
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fab -d xbaw"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://fab:fab@db:5432/xbaw
+      SEED_ON_STARTUP: "true"
+      SIMULATOR_ENABLED: "true"
+      SIMULATOR_INTERVAL_SECONDS: "12"
+      CORS_ORIGINS: http://localhost:8080,http://localhost:5173
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  web:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+
+volumes:
+  pgdata:

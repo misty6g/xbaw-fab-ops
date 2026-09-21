@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/xbaw-fab-ops/lot_move.schema.json",
+  "title": "Wafer lot move",
+  "description": "Track-in, track-out, scrap, or hold for a wafer lot, with optional inline metrology. Inspired by fab lot-location events rather than a specific tool OEM schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "event_type", "timestamp", "tool_id", "lot_id", "payload"],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "event_type": { "const": "lot_move" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "tool_id": { "type": "string", "minLength": 1 },
+    "lot_id": { "type": "string", "minLength": 1 },
+    "ceid": { "type": ["integer", "null"], "minimum": 0 },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "step", "recipe_id", "wafers_in", "wafers_out"],
+      "properties": {
+        "action": { "type": "string", "enum": ["track_in", "track_out", "scrap", "hold"] },
+        "step": { "type": "string", "minLength": 1 },
+        "recipe_id": { "type": "string", "minLength": 1 },
+        "wafers_in": { "type": "integer", "minimum": 0 },
+        "wafers_out": { "type": "integer", "minimum": 0 },
+        "scrap_wafers": { "type": "integer", "minimum": 0 },
+        "good_die": { "type": ["integer", "null"], "minimum": 0 },
+        "tested_die": { "type": ["integer", "null"], "minimum": 0 },
+        "measurements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["metric", "value"],
+            "properties": {
+              "metric": { "type": "string" },
+              "value": { "type": "number" },
+              "unit": { "type": ["string", "null"] },
+              "wafer_slot": { "type": ["integer", "null"], "minimum": 1, "maximum": 25 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

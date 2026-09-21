@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/xbaw-fab-ops/alarm.schema.json",
+  "title": "Alarm event",
+  "description": "SECS/GEM-inspired alarm set/clear. A production bridge would translate S5F1 alarm reports into this document.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "event_type", "timestamp", "tool_id", "payload"],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "event_type": { "const": "alarm" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "tool_id": { "type": "string", "minLength": 1 },
+    "lot_id": { "type": ["string", "null"] },
+    "ceid": { "type": ["integer", "null"], "minimum": 0 },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alarm_id", "alarm_code", "severity", "state", "text"],
+      "properties": {
+        "alarm_id": { "type": "string", "minLength": 1 },
+        "alarm_code": { "type": "string", "minLength": 1 },
+        "severity": { "type": "string", "enum": ["warning", "alarm", "critical"] },
+        "state": { "type": "string", "enum": ["set", "clear"] },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

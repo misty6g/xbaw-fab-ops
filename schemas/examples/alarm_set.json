@@ -1,0 +1,15 @@
+{
+  "event_id": "example-alarm-set-1",
+  "event_type": "alarm",
+  "timestamp": "2026-09-21T15:11:00Z",
+  "tool_id": "ETH-01",
+  "lot_id": "L260921-001",
+  "ceid": 2001,
+  "payload": {
+    "alarm_id": "ETH-OPEN-1",
+    "alarm_code": "CHAMBER_PRESSURE",
+    "severity": "alarm",
+    "state": "set",
+    "text": "Chamber pressure above interlock"
+  }
+}

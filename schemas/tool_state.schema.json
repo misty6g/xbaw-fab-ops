@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/xbaw-fab-ops/tool_state.schema.json",
+  "title": "Tool state event",
+  "description": "SECS/GEM-inspired collection event for an equipment process-state change. This is a JSON stand-in for an S6F11 report, not an HSMS frame.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "event_type", "timestamp", "tool_id", "payload"],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "event_type": { "const": "tool_state" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "tool_id": { "type": "string", "minLength": 1 },
+    "lot_id": { "type": ["string", "null"] },
+    "ceid": { "type": ["integer", "null"], "minimum": 0 },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["to_state"],
+      "properties": {
+        "from_state": {
+          "type": ["string", "null"],
+          "enum": ["IDLE", "SETUP", "EXECUTING", "PAUSE", "ALARM", "DOWN", null]
+        },
+        "to_state": {
+          "type": "string",
+          "enum": ["IDLE", "SETUP", "EXECUTING", "PAUSE", "ALARM", "DOWN"]
+        },
+        "recipe_id": { "type": ["string", "null"] },
+        "operator": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
